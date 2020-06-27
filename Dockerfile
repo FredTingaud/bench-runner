@@ -34,6 +34,9 @@ RUN git clone https://github.com/FredTingaud/quick-bench-back-end /quick-bench &
 RUN git clone https://github.com/FredTingaud/quick-bench-front-end /quick-bench/quick-bench-front-end && \
     cd /quick-bench/quick-bench-front-end/build-bench && \
     yarn && \
+    yarn build && \
+    cd ../quick-bench && \
+    yarn && \
     yarn build
 
 COPY ./start /quick-bench/start
