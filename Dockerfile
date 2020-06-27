@@ -39,8 +39,7 @@ RUN git clone https://github.com/FredTingaud/quick-bench-front-end /quick-bench/
     yarn && \
     yarn build
 
-COPY ./start /quick-bench/start
+COPY ./build-scripts/start-* /quick-bench/
 
 WORKDIR /quick-bench
 
-# ENTRYPOINT [ "/quick-bench/start" ]

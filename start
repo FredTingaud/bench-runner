@@ -1,3 +1,0 @@
-#! /bin/bash
-
-mkdir -m 777 -p $(printf "/data/%02x " $(seq 0 255)) && /quick-bench/app-time.js
