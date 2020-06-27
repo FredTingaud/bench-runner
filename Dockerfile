@@ -27,14 +27,12 @@ RUN add-apt-repository \
 
 RUN git clone https://github.com/FredTingaud/quick-bench-back-end /quick-bench && \
     cd /quick-bench && \
-    git checkout wip/docker && \
     npm install && \
     ./seccomp.js && \
     sysctl -w kernel.perf_event_paranoid=1
 
 RUN git clone https://github.com/FredTingaud/quick-bench-front-end /quick-bench/quick-bench-front-end && \
-    cd /quick-bench/quick-bench-front-end && \
-    git checkout wip/build-bench && \
+    cd /quick-bench/quick-bench-front-end/build-bench && \
     yarn && \
     yarn build
 
