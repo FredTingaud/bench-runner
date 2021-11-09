@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL maintainer="Fred Tingaud <ftingaud@hotmail.com>"
 
@@ -11,7 +11,9 @@ RUN apt update && \
     ca-certificates \
     curl \
     gnupg-agent \
-    software-properties-common
+    software-properties-common \
+    && apt-get clean autoclean --yes \
+    && apt-get autoremove --yes
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -23,7 +25,9 @@ RUN add-apt-repository \
       $(lsb_release -cs) \
       stable" && \
     apt update && \
-    apt install -y nodejs yarn docker-ce docker-ce-cli containerd.io
+    apt install -y nodejs yarn docker-ce docker-ce-cli containerd.io \
+    && apt-get clean autoclean --yes \
+    && apt-get autoremove --yes
 
 RUN git clone https://github.com/FredTingaud/quick-bench-back-end /quick-bench && \
     cd /quick-bench && \
