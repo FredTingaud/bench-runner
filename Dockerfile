@@ -4,6 +4,8 @@ LABEL maintainer="Fred Tingaud <ftingaud@hotmail.com>"
 
 USER root
 
+ARG BACKEND_BRANCH=main
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
@@ -37,14 +39,17 @@ RUN add-apt-repository \
     containerd.io \
     && rm -rf /var/lib/apt/lists/*
 
+ADD https://api.github.com/repos/fredtingaud/quick-bench-back-end/git/refs/heads/${BACKEND_BRANCH} /tmp/backend-version.json
 
-RUN git clone https://github.com/FredTingaud/quick-bench-back-end /quick-bench && \
+RUN git clone -b ${BACKEND_BRANCH} https://github.com/FredTingaud/quick-bench-back-end /quick-bench && \
     cd /quick-bench && \
     npm install && \
     ./seccomp.js && \
     sysctl -w kernel.perf_event_paranoid=1
 
-RUN git clone https://github.com/FredTingaud/quick-bench-front-end /quick-bench/quick-bench-front-end && \
+ADD https://api.github.com/repos/fredtingaud/quick-bench-front-end/git/refs/heads/main /tmp/frontend-version.json
+
+RUN git clone -b main https://github.com/FredTingaud/quick-bench-front-end /quick-bench/quick-bench-front-end && \
     cd /quick-bench/quick-bench-front-end/build-bench && \
     yarn && \
     yarn build && \
